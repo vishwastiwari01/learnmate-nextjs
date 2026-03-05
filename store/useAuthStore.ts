@@ -37,7 +37,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       set({ loading: false, initialized: true })
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    supabase.auth.onAuthStateChange(async (_event: any, session: any) => 
+    supabase.auth.onAuthStateChange(async (_event: any, session: any) => {
       if (session?.user) {
         const { data: profile } = await getProfile(session.user.id)
         set({ session, user: session.user, profile })
