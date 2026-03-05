@@ -5,9 +5,9 @@ import { genRoomCode } from '@/lib/utils'
 export async function POST(req: NextRequest) {
   try {
     const { hostName, hostId, subject, difficulty, gameType } = await req.json()
-    const supabase = getServerClient()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = getServerClient() as any
 
-    // Generate unique code
     let code = genRoomCode()
     let attempts = 0
     while (attempts < 5) {
@@ -17,33 +17,17 @@ export async function POST(req: NextRequest) {
       attempts++
     }
 
-    // Create room
     const { data: room, error: roomErr } = await supabase
       .from('game_rooms')
-      .insert({
-        code,
-        host_id: hostId || undefined,
-        host_name: hostName,
-        subject,
-        difficulty: difficulty as string,
-        game_type: gameType as string,
-      })
+      .insert({ code, host_id: hostId || null, host_name: hostName, subject, difficulty, game_type: gameType })
       .select()
       .single()
 
     if (roomErr || !room) return NextResponse.json({ error: roomErr?.message }, { status: 500 })
 
-    // Add host as first player
     const { data: player, error: playerErr } = await supabase
       .from('game_players')
-      .insert({
-        room_id: room.id,
-        user_id: hostId || undefined,
-        player_name: hostName,
-        avatar: '🦊',
-        is_host: true,
-        is_ready: true,
-      })
+      .insert({ room_id: room.id, user_id: hostId || null, player_name: hostName, avatar: '🦊', is_host: true, is_ready: true })
       .select()
       .single()
 
