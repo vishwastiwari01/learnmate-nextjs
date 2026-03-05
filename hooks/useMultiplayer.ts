@@ -1,9 +1,12 @@
 'use client'
 import { useEffect, useRef, useCallback, useState } from 'react'
-import { supabase, subscribeToRoom, updatePlayerScore, submitAnswer, updateRoomStatus, advanceQuestion, setRoomQuestions } from '@/lib/supabase'
+import { supabase as supabaseClient, subscribeToRoom, updatePlayerScore, submitAnswer, updateRoomStatus, advanceQuestion, setRoomQuestions } from '@/lib/supabase'
 import { useAuthStore } from '@/store/useAuthStore'
 import { useUserStore } from '@/store/useUserStore'
 import type { Question } from '@/types'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const supabase = supabaseClient as any
 
 export interface MultiplayerPlayer {
   id: string
@@ -34,15 +37,14 @@ export function useMultiplayer(roomId: string | null) {
   const { profile } = useAuthStore()
   const { addXP } = useUserStore()
 
-  const [room, setRoom]       = useState<MultiplayerRoom | null>(null)
-  const [players, setPlayers] = useState<MultiplayerPlayer[]>([])
+  const [room, setRoom]         = useState<MultiplayerRoom | null>(null)
+  const [players, setPlayers]   = useState<MultiplayerPlayer[]>([])
   const [myPlayer, setMyPlayer] = useState<MultiplayerPlayer | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError]     = useState<string | null>(null)
+  const [loading, setLoading]   = useState(false)
+  const [error, setError]       = useState<string | null>(null)
 
   const unsubRef = useRef<(() => void) | null>(null)
 
-  // Load room + players
   const loadRoom = useCallback(async (id: string) => {
     setLoading(true)
     const { data, error } = await supabase
@@ -68,15 +70,13 @@ export function useMultiplayer(roomId: string | null) {
     const pls = (data.game_players as MultiplayerPlayer[]) || []
     setPlayers(pls)
 
-    // Find my player
     if (profile) {
-      const me = pls.find(p => p.user_id === profile.id) || null
+      const me = pls.find((p: MultiplayerPlayer) => p.user_id === profile.id) || null
       setMyPlayer(me)
     }
     setLoading(false)
   }, [profile])
 
-  // Subscribe to realtime updates
   useEffect(() => {
     if (!roomId) return
     loadRoom(roomId)
@@ -94,15 +94,15 @@ export function useMultiplayer(roomId: string | null) {
         setPlayers(prev => {
           const exists = prev.find(p => p.id === (player.id as string))
           if (exists) return prev
-          return [...prev, player as MultiplayerPlayer]
+          return [...prev, player as unknown as MultiplayerPlayer]
         })
       },
       onPlayerUpdate: (updated) => {
         setPlayers(prev => prev.map(p =>
-          p.id === updated.id ? { ...p, ...(updated as Partial<MultiplayerPlayer>) } : p
+          p.id === updated.id ? { ...p, ...(updated as unknown as Partial<MultiplayerPlayer>) } : p
         ))
         if (myPlayer && updated.id === myPlayer.id) {
-          setMyPlayer(prev => prev ? { ...prev, ...(updated as Partial<MultiplayerPlayer>) } : null)
+          setMyPlayer(prev => prev ? { ...prev, ...(updated as unknown as Partial<MultiplayerPlayer>) } : null)
         }
       },
     })
@@ -110,14 +110,12 @@ export function useMultiplayer(roomId: string | null) {
     return () => { unsubRef.current?.() }
   }, [roomId, loadRoom])
 
-  // HOST: push questions to room and start game
   const startGame = useCallback(async (questions: Question[]) => {
     if (!room || !myPlayer?.is_host) return
     await setRoomQuestions(room.id, questions as object[])
     await updateRoomStatus(room.id, 'playing', { started_at: new Date().toISOString(), current_q: 0 })
   }, [room, myPlayer])
 
-  // HOST: advance to next question
   const nextQuestion = useCallback(async () => {
     if (!room || !myPlayer?.is_host) return
     const next = room.current_q + 1
@@ -128,7 +126,6 @@ export function useMultiplayer(roomId: string | null) {
     }
   }, [room, myPlayer])
 
-  // PLAYER: submit an answer
   const submitMyAnswer = useCallback(async (
     questionIdx: number,
     chosen: string,
@@ -137,17 +134,13 @@ export function useMultiplayer(roomId: string | null) {
     scoreGained: number
   ) => {
     if (!room || !myPlayer) return
-    // Update player score in DB
     await updatePlayerScore(myPlayer.id, myPlayer.score + scoreGained, myPlayer.energy + (correct ? 20 : 0))
-    // Record answer
     await submitAnswer({ room_id: room.id, player_id: myPlayer.id, question_idx: questionIdx, chosen, correct, time_taken_ms: timeTakenMs, score_gained: scoreGained })
-    // Award XP to profile
     if (correct && profile) {
       addXP(scoreGained)
     }
   }, [room, myPlayer, profile, addXP])
 
-  // Mark player ready
   const setReady = useCallback(async (ready: boolean) => {
     if (!myPlayer) return
     await supabase.from('game_players').update({ is_ready: ready }).eq('id', myPlayer.id)
