@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+:root {
+  --bg:     #07090F;
+  --bg1:    #0D1017;
+  --bg2:    #111520;
+  --bg3:    #161B28;
+  --b:      rgba(255,255,255,0.06);
+  --b2:     rgba(255,255,255,0.11);
+  --b3:     rgba(255,255,255,0.18);
+  --text:   #EEF2FF;
+  --text2:  #8892A4;
+  --text3:  #4A5568;
+  --orange: #FF6B2B;
+  --yellow: #F5C542;
+  --green:  #00D68F;
+  --cyan:   #00C9E4;
+  --purple: #7C3AED;
+  --pink:   #FF4FA3;
+  --red:    #FF4757;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--bg1); }
+::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 99px; }
+
+/* SELECTION */
+::selection { background: rgba(124,58,237,0.3); color: var(--text); }
+
+/* GLASS CARD */
+.glass {
+  background: rgba(13,16,23,0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--b2);
+}
+
+/* GRADIENT TEXT */
+.grad-orange { background: linear-gradient(135deg,var(--orange),var(--yellow)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.grad-purple { background: linear-gradient(135deg,var(--purple),var(--cyan)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.grad-green  { background: linear-gradient(135deg,var(--green),var(--cyan)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+/* GAME CANVAS STYLES */
+canvas { display: block; }
+
+/* ROPE GAME specific */
+.rope-segment {
+  transform-origin: center;
+  transition: transform 0.1s ease;
+}
+
+/* BLOCK CODING */
+.code-block-drag {
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.code-block-drag:active { cursor: grabbing; }
+.drop-zone {
+  transition: all 0.15s;
+  border: 2px dashed var(--b2);
+}
+.drop-zone.over {
+  border-color: var(--cyan);
+  background: rgba(0,201,228,0.06);
+}
+
+/* GLOW ANIMATIONS */
+@keyframes glowPulse {
+  0%,100% { box-shadow: 0 0 12px rgba(124,58,237,0.3); }
+  50%      { box-shadow: 0 0 28px rgba(124,58,237,0.6); }
+}
+.glow-pulse { animation: glowPulse 2s ease-in-out infinite; }
+
+/* ROADMAP CONNECTOR LINE */
+.roadmap-line {
+  stroke: rgba(255,255,255,0.08);
+  stroke-width: 2;
+  stroke-dasharray: 6 4;
+}
+.roadmap-line.active { stroke: var(--purple); stroke-dasharray: none; }
+
+/* COURSE CARD HOVER */
+.course-card { transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; }
+.course-card:hover { transform: translateY(-4px); }
+
+/* PAGE TRANSITION */
+.page-enter { animation: fadeUp 0.3s ease both; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* MOBILE SAFE AREA */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .mobile-nav { padding-bottom: calc(0.5rem + env(safe-area-inset-bottom)); }
+}
