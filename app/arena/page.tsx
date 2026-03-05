@@ -543,6 +543,7 @@ function SurferGame({ players, myScore }: { players: {name:string;score:number;a
     const ctx = canvas.getContext('2d')!
 
     function draw() {
+      if (!canvas) return
       const W = canvas.offsetWidth, H = 260
       canvas.width = W * window.devicePixelRatio
       canvas.height = H * window.devicePixelRatio
