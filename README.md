@@ -1,65 +1,114 @@
 # ⚡ LearnMate
 
-India's AI-powered gamified learning platform.
+**Gamified AI-powered learning platform for Indian students** — built with Next.js 14, Supabase, and OpenRouter AI.
 
-## Quick Start
+> Learn · Battle · Code · Level Up
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vishwastiwari01/learnmate-nextjs)
+
+---
+
+## ✨ Features
+
+| Feature | Description |
+|---------|-------------|
+| ⚔️ **Battle Arena** | Real-time multiplayer quiz battles (Summit Rush, Tug of War, Wave Surfer) |
+| 🤖 **AI Tutor** | ChatGPT-style free tutor — notes upload, image paste, voice input, 6 free models |
+| 🎨 **AI Visualizer** | Free AI-generated educational diagrams via Pollinations.ai |
+| 💻 **Coding Lab** | Python · JavaScript · Java · C · C++ — Block → Fill → Real code challenges |
+| 📚 **AI Courses** | AI-generated full courses on any topic |
+| 🗺️ **AI Roadmap** | Personalised learning paths from any goal |
+| 🏆 **XP System** | Levels, streaks, global leaderboard |
+
+---
+
+## 🚀 Deploy on Vercel (5 minutes)
+
+### Step 1 — Push to GitHub
+```bash
+git init
+git add .
+git commit -m "🚀 Initial LearnMate deploy"
+git remote add origin https://github.com/YOUR_USERNAME/learnmate-nextjs.git
+git push -u origin main
+```
+
+### Step 2 — Deploy on Vercel
+1. Go to [vercel.com](https://vercel.com) → **Add New Project**
+2. Import your GitHub repo
+3. Add Environment Variables (see below)
+4. Click **Deploy**
+
+### Step 3 — Environment Variables
+
+Add these in Vercel → Project Settings → Environment Variables:
+
+```
+OPENROUTER_API_KEY        = sk-or-v1-...         (from openrouter.ai/keys)
+NEXT_PUBLIC_SUPABASE_URL  = https://xxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY = eyJ...
+SUPABASE_SERVICE_ROLE_KEY = eyJ...               (Settings → API → service_role)
+NEXT_PUBLIC_APP_URL       = https://your-app.vercel.app
+```
+
+### Step 4 — Supabase Setup
+Run the SQL in `supabase/schema.sql` in your Supabase SQL editor.
+
+---
+
+## 🛠️ Local Development
 
 ```bash
-# 1. Install dependencies
 npm install
-
-# 2. Set up environment variables
 cp .env.local.example .env.local
-# Add your OpenRouter key (same as app.py OPENROUTER_API_KEY)
-
-# 3. Run development server
+# Fill in your keys in .env.local
 npm run dev
-
-# 4. Open http://localhost:3000
 ```
 
-## Deploy to Vercel
+Open [http://localhost:3000](http://localhost:3000)
 
-```bash
-# Push to GitHub, then:
-# 1. Go to vercel.com → New Project → Import your repo
-# 2. Add environment variables in Vercel dashboard
-# 3. Deploy!
+---
+
+## 🔑 Getting API Keys
+
+| Key | Where to get it |
+|-----|----------------|
+| `OPENROUTER_API_KEY` | [openrouter.ai/keys](https://openrouter.ai/keys) — free tier available |
+| Supabase keys | [supabase.com](https://supabase.com) → Your Project → Settings → API |
+
+---
+
+## 🏗️ Tech Stack
+
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS + Framer Motion
+- **Database**: Supabase (PostgreSQL + Realtime)
+- **AI**: OpenRouter (Llama, DeepSeek, Gemma, Mistral, Qwen)
+- **Image AI**: Pollinations.ai (free)
+- **Deployment**: Vercel
+
+---
+
+## 📁 Project Structure
+
+```
+learnmate/
+├── app/
+│   ├── arena/          # Battle multiplayer quiz
+│   ├── learn/          # AI Tutor (ChatGPT-style)
+│   ├── coding/         # Coding Lab (5 languages)
+│   ├── courses/        # AI Course Generator
+│   ├── roadmap/        # AI Learning Roadmap
+│   ├── dashboard/      # User dashboard
+│   └── api/            # API routes (AI, quiz, rooms)
+├── components/         # Reusable UI components
+├── store/              # Zustand state management
+├── lib/                # Supabase, OpenRouter, utils
+├── supabase/           # Database schema & setup guide
+└── types/              # TypeScript interfaces
 ```
 
-## Environment Variables
+---
 
-```
-OPENROUTER_API_KEY=sk-or-v1-...   # Same as app.py
-NEXT_PUBLIC_SUPABASE_URL=...       # Optional for now
-NEXT_PUBLIC_SUPABASE_ANON_KEY=...  # Optional for now
-```
-
-## Tech Stack
-
-- **Next.js 14** (App Router + TypeScript)
-- **Tailwind CSS** + custom design system
-- **Framer Motion** animations
-- **Zustand** state management
-- **OpenRouter AI** (Llama, DeepSeek, Gemma — all free)
-- **Canvas API** for mini-games
-
-## Pages
-
-| Route | Description |
-|-------|-------------|
-| `/` | Landing + Onboarding |
-| `/dashboard` | Student home |
-| `/arena` | Multiplayer quiz battles + mini games |
-| `/learn` | AI Tutor + quiz mode |
-| `/coding` | Block coding → fill blanks → real Python |
-| `/courses` | Pre-built + AI-generated courses |
-| `/roadmap` | AI learning roadmap generator |
-
-## Mini Games (Arena)
-
-- 🏔️ **Summit Rush** — Canvas-based climbing race
-- 🪢 **Tug of War** — Real-time rope physics with teams
-- 🏄 **Wave Surfer** — Animated ocean surfing race
-
-Made with ❤️ for India's learners.
+Built with ❤️ for India's 260 million students · India AI Impact Summit 2026
