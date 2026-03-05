@@ -58,8 +58,6 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
 
   signUp: async (email, password, meta) => {
     set({ loading: true })
-
-    // Step 1: Create the auth user
     const { data, error } = await supabase.auth.signUp({
       email, password,
       options: { data: { name: meta.name, avatar: meta.avatar } }
@@ -67,7 +65,6 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     if (error) { set({ loading: false }); return { error: error.message } }
     if (!data.user) { set({ loading: false }); return { error: 'Signup failed — no user returned' } }
 
-    // Step 2: Use the API route (service role) to upsert profile — bypasses RLS
     try {
       const res = await fetch('/api/auth/complete-profile', {
         method: 'POST',
