@@ -40,8 +40,8 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     }
 
     // Listen for auth changes
-    supabase.auth.onAuthStateChange(async (event, session) => {
-      if (session?.user) {
+    supabase.auth.onAuthStateChange(async (event: any, session: any) => {
+    if (session?.user) {
         const { data: profile } = await getProfile(session.user.id)
         set({ session, user: session.user, profile })
       } else {
