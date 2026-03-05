@@ -5,18 +5,18 @@ import type { Json } from './database.types'
 const supabaseUrl  = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
-// ── BROWSER CLIENT (use in components) ───────────────
-export const supabase = createClient<Database>(supabaseUrl, supabaseAnon)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const supabase = createClient<Database>(supabaseUrl, supabaseAnon) as any
 
 // ── SERVER CLIENT (use in API routes) ────────────────
 export function getServerClient() {
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return createClient<Database>(supabaseUrl, serviceKey, {
     auth: { autoRefreshToken: false, persistSession: false }
-  })
+  }) as any
 }
 
-// ── AUTH HELPERS ─────────────────────────────────────
 export const auth = supabase.auth
 
 export async function signInWithEmail(email: string, password: string) {
@@ -35,7 +35,6 @@ export async function getSession() {
   return supabase.auth.getSession()
 }
 
-// ── PROFILE HELPERS ───────────────────────────────────
 export async function getProfile(userId: string) {
   const { data, error } = await supabase
     .from('profiles')
@@ -70,7 +69,6 @@ export async function updateXP(userId: string, amount: number, reason: string, r
   return { data, error }
 }
 
-// ── ROOM HELPERS ──────────────────────────────────────
 export async function createRoom(room: {
   code: string
   host_id?: string | null
@@ -100,7 +98,7 @@ export async function getRoomByCode(code: string) {
 export async function updateRoomStatus(roomId: string, status: 'lobby' | 'playing' | 'finished', extra?: Record<string, unknown>) {
   const { data, error } = await supabase
     .from('game_rooms')
-    .update({ status, ...(extra ?? {}) } as { status: string })
+    .update({ status, ...(extra ?? {}) })
     .eq('id', roomId)
     .select()
     .single()
@@ -115,7 +113,6 @@ export async function advanceQuestion(roomId: string, currentQ: number) {
   return supabase.from('game_rooms').update({ current_q: currentQ + 1 }).eq('id', roomId)
 }
 
-// ── PLAYER HELPERS ────────────────────────────────────
 export async function joinRoomAsPlayer(player: {
   room_id: string
   user_id?: string | null
@@ -148,7 +145,6 @@ export async function submitAnswer(answer: {
   return supabase.from('game_answers').insert(answer)
 }
 
-// ── LEADERBOARD ───────────────────────────────────────
 export async function getLeaderboard() {
   const { data, error } = await supabase
     .from('leaderboard')
@@ -156,7 +152,6 @@ export async function getLeaderboard() {
   return { data, error }
 }
 
-// ── REALTIME SUBSCRIPTIONS ────────────────────────────
 export function subscribeToRoom(
   roomId: string,
   callbacks: {
@@ -171,25 +166,24 @@ export function subscribeToRoom(
     .on('postgres_changes', {
       event: 'UPDATE', schema: 'public', table: 'game_rooms',
       filter: `id=eq.${roomId}`
-    }, payload => callbacks.onRoomUpdate?.(payload.new as Record<string, unknown>))
+    }, (payload: any) => callbacks.onRoomUpdate?.(payload.new as Record<string, unknown>))
     .on('postgres_changes', {
       event: 'INSERT', schema: 'public', table: 'game_players',
       filter: `room_id=eq.${roomId}`
-    }, payload => callbacks.onPlayerJoin?.(payload.new as Record<string, unknown>))
+    }, (payload: any) => callbacks.onPlayerJoin?.(payload.new as Record<string, unknown>))
     .on('postgres_changes', {
       event: 'UPDATE', schema: 'public', table: 'game_players',
       filter: `room_id=eq.${roomId}`
-    }, payload => callbacks.onPlayerUpdate?.(payload.new as Record<string, unknown>))
+    }, (payload: any) => callbacks.onPlayerUpdate?.(payload.new as Record<string, unknown>))
     .on('postgres_changes', {
       event: 'INSERT', schema: 'public', table: 'game_answers',
       filter: `room_id=eq.${roomId}`
-    }, payload => callbacks.onAnswer?.(payload.new as Record<string, unknown>))
+    }, (payload: any) => callbacks.onAnswer?.(payload.new as Record<string, unknown>))
     .subscribe()
 
   return () => supabase.removeChannel(channel)
 }
 
-// ── ROADMAP HELPERS ───────────────────────────────────
 export async function saveRoadmap(roadmap: {
   user_id: string
   title: string
@@ -210,7 +204,6 @@ export async function getUserRoadmaps(userId: string) {
   return supabase.from('roadmaps').select('*').eq('user_id', userId).order('created_at', { ascending: false })
 }
 
-// ── LEARN SESSION ─────────────────────────────────────
 export async function saveLearnSession(session: {
   user_id: string
   subject: string
