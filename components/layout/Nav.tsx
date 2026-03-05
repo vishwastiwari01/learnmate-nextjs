@@ -4,7 +4,8 @@ import { usePathname } from 'next/navigation'
 import { cn, xpProgress } from '@/lib/utils'
 import { useAuthStore } from '@/store/useAuthStore'
 import { useUserStore } from '@/store/useUserStore'
-import { Home, Swords, BookOpen, Code2, GraduationCap, Map, Settings, LogOut } from 'lucide-react'
+import { useTheme } from '@/hooks/useTheme'
+import { Home, Swords, BookOpen, Code2, GraduationCap, Map, Settings, LogOut, Sun, Moon } from 'lucide-react'
 import { useState } from 'react'
 import { ApiKeyModal } from '@/components/ui/ApiKeyModal'
 
@@ -21,6 +22,7 @@ export function Nav() {
   const pathname = usePathname()
   const { profile, signOut } = useAuthStore()
   const { apiKey } = useUserStore()
+  const { isDark, toggleTheme, isMounted } = useTheme()
   const [showApiModal, setShowApiModal] = useState(false)
   const progress = profile ? xpProgress(profile.xp) : null
 
@@ -57,6 +59,12 @@ export function Nav() {
               <div className="text-sm font-bold text-brand-orange">🔥{profile.streak}</div>
               <div className="text-lg">{profile.avatar}</div>
             </>
+          )}
+          {isMounted && (
+            <button onClick={toggleTheme}
+              className="p-2 rounded-lg text-white/30 hover:text-white hover:bg-bg-elevated transition-all" title={isDark ? 'Switch to light theme' : 'Switch to dark theme'}>
+              {isDark ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
           )}
           <button onClick={() => setShowApiModal(true)}
             className={cn('p-2 rounded-lg transition-all text-sm',
