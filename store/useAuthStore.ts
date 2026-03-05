@@ -36,8 +36,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     } else {
       set({ loading: false, initialized: true })
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    supabase.auth.onAuthStateChange(async (event: any, session: any) => {
+    supabase.auth.onAuthStateChange(async (_event, session) => {
       if (session?.user) {
         const { data: profile } = await getProfile(session.user.id)
         set({ session, user: session.user, profile })
@@ -58,13 +57,18 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
 
   signUp: async (email, password, meta) => {
     set({ loading: true })
+
+    // Step 1: Create auth user — trigger auto-creates base profile row
     const { data, error } = await supabase.auth.signUp({
-      email, password,
+      email,
+      password,
       options: { data: { name: meta.name, avatar: meta.avatar } }
     })
+
     if (error) { set({ loading: false }); return { error: error.message } }
     if (!data.user) { set({ loading: false }); return { error: 'Signup failed — no user returned' } }
 
+    // Step 2: Call API route with service role to upsert full profile
     try {
       const res = await fetch('/api/auth/complete-profile', {
         method: 'POST',
@@ -87,6 +91,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       return { error: 'Network error saving profile' }
     }
 
+    // Step 3: Fetch final profile and set state
     const { data: profile } = await getProfile(data.user.id)
     set({ session: data.session, user: data.user, profile, loading: false })
     return { error: null }
@@ -107,8 +112,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   updateProfile: async (updates) => {
     const { user, profile } = get()
     if (!user || !profile) return
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error } = await (supabase as any).from('profiles').update(updates).eq('id', user.id)
+    const { error } = await supabase.from('profiles').update(updates).eq('id', user.id)
     if (!error) set({ profile: { ...profile, ...updates } })
   },
 }))
