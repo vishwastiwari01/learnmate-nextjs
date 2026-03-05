@@ -20,7 +20,14 @@ export async function POST(req: NextRequest) {
     // Create room
     const { data: room, error: roomErr } = await supabase
       .from('game_rooms')
-      .insert({ code, host_id: hostId || null, host_name: hostName, subject, difficulty, game_type: gameType })
+      .insert({
+        code,
+        host_id: hostId || undefined,
+        host_name: hostName,
+        subject,
+        difficulty: difficulty as string,
+        game_type: gameType as string,
+      })
       .select()
       .single()
 
@@ -29,7 +36,14 @@ export async function POST(req: NextRequest) {
     // Add host as first player
     const { data: player, error: playerErr } = await supabase
       .from('game_players')
-      .insert({ room_id: room.id, user_id: hostId || null, player_name: hostName, avatar: '🦊', is_host: true, is_ready: true })
+      .insert({
+        room_id: room.id,
+        user_id: hostId || undefined,
+        player_name: hostName,
+        avatar: '🦊',
+        is_host: true,
+        is_ready: true,
+      })
       .select()
       .single()
 

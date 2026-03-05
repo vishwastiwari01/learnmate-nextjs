@@ -58,14 +58,14 @@ export interface Database {
         }
         Insert: {
           code: string
-          host_id?: string
+          host_id?: string | null
           host_name: string
-          subject?: string
-          difficulty?: string
-          game_type?: string
-          status?: string
-          questions?: Json
-          max_players?: number
+          subject?: string | null
+          difficulty?: string | null
+          game_type?: string | null
+          status?: string | null
+          questions?: Json | null
+          max_players?: number | null
         }
         Update: {
           status?: string
@@ -91,14 +91,14 @@ export interface Database {
         }
         Insert: {
           room_id: string
-          user_id?: string
+          user_id?: string | null
           player_name: string
-          avatar?: string
-          score?: number
-          energy?: number
-          is_host?: boolean
-          is_ready?: boolean
-          team?: string
+          avatar?: string | null
+          score?: number | null
+          energy?: number | null
+          is_host?: boolean | null
+          is_ready?: boolean | null
+          team?: string | null
         }
         Update: {
           score?: number

@@ -33,7 +33,15 @@ export async function POST(req: NextRequest) {
 
     const { data: player, error: playerErr } = await supabase
       .from('game_players')
-      .insert({ room_id: room.id, user_id: userId || null, player_name: playerName, avatar: avatar || '🐯', is_host: false, is_ready: false, team })
+      .insert({
+        room_id: room.id,
+        user_id: userId || undefined,
+        player_name: playerName,
+        avatar: avatar || '🐯',
+        is_host: false,
+        is_ready: false,
+        team: team as string,
+      })
       .select()
       .single()
 

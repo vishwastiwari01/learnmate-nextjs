@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from './database.types'
+import type { Json } from './database.types'
 
 const supabaseUrl  = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -72,7 +73,7 @@ export async function updateXP(userId: string, amount: number, reason: string, r
 // ── ROOM HELPERS ──────────────────────────────────────
 export async function createRoom(room: {
   code: string
-  host_id: string
+  host_id?: string | null
   host_name: string
   subject: string
   difficulty: string
@@ -96,10 +97,10 @@ export async function getRoomByCode(code: string) {
   return { data, error }
 }
 
-export async function updateRoomStatus(roomId: string, status: 'lobby' | 'playing' | 'finished', extra?: object) {
+export async function updateRoomStatus(roomId: string, status: 'lobby' | 'playing' | 'finished', extra?: Record<string, unknown>) {
   const { data, error } = await supabase
     .from('game_rooms')
-    .update({ status, ...extra })
+    .update({ status, ...(extra ?? {}) } as { status: string })
     .eq('id', roomId)
     .select()
     .single()
@@ -117,11 +118,11 @@ export async function advanceQuestion(roomId: string, currentQ: number) {
 // ── PLAYER HELPERS ────────────────────────────────────
 export async function joinRoomAsPlayer(player: {
   room_id: string
-  user_id?: string
+  user_id?: string | null
   player_name: string
   avatar: string
-  is_host?: boolean
-  team?: 'red' | 'blue' | 'none'
+  is_host?: boolean | null
+  team?: string | null
 }) {
   const { data, error } = await supabase
     .from('game_players')
@@ -193,8 +194,8 @@ export async function saveRoadmap(roadmap: {
   user_id: string
   title: string
   goal: string
-  nodes: object[]
-  node_statuses: object
+  nodes: Json
+  node_statuses: Json
   completion_percent: number
 }) {
   const { data, error } = await supabase
@@ -213,7 +214,7 @@ export async function getUserRoadmaps(userId: string) {
 export async function saveLearnSession(session: {
   user_id: string
   subject: string
-  messages: object[]
+  messages: Json
 }) {
   return supabase.from('learn_sessions').insert(session).select().single()
 }
