@@ -1,6 +1,6 @@
 'use client'
 import { create } from 'zustand'
-import { supabase, getProfile, upsertProfile } from '@/lib/supabase'
+import { supabase, getProfile } from '@/lib/supabase'
 import type { Session, User } from '@supabase/supabase-js'
 import type { Database } from '@/lib/database.types'
 
@@ -12,7 +12,6 @@ interface AuthStore {
   profile: Profile | null
   loading: boolean
   initialized: boolean
-
   initialize: () => Promise<void>
   signIn: (email: string, password: string) => Promise<{ error: string | null }>
   signUp: (email: string, password: string, meta: { name: string; avatar: string; studying_what: string; interests: string[] }) => Promise<{ error: string | null }>
@@ -30,7 +29,6 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
 
   initialize: async () => {
     set({ loading: true })
-    // Get current session
     const { data: { session } } = await supabase.auth.getSession()
     if (session?.user) {
       const { data: profile } = await getProfile(session.user.id)
@@ -38,10 +36,9 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     } else {
       set({ loading: false, initialized: true })
     }
-
-    // Listen for auth changes
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     supabase.auth.onAuthStateChange(async (event: any, session: any) => {
-    if (session?.user) {
+      if (session?.user) {
         const { data: profile } = await getProfile(session.user.id)
         set({ session, user: session.user, profile })
       } else {
@@ -61,23 +58,40 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
 
   signUp: async (email, password, meta) => {
     set({ loading: true })
+
+    // Step 1: Create the auth user
     const { data, error } = await supabase.auth.signUp({
       email, password,
       options: { data: { name: meta.name, avatar: meta.avatar } }
     })
     if (error) { set({ loading: false }); return { error: error.message } }
-    if (data.user) {
-      // Upsert full profile with all onboarding data
-      await upsertProfile({
-        id: data.user.id,
-        name: meta.name,
-        avatar: meta.avatar,
-        studying_what: meta.studying_what,
-        interests: meta.interests,
+    if (!data.user) { set({ loading: false }); return { error: 'Signup failed — no user returned' } }
+
+    // Step 2: Use the API route (service role) to upsert profile — bypasses RLS
+    try {
+      const res = await fetch('/api/auth/complete-profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: data.user.id,
+          name: meta.name,
+          avatar: meta.avatar,
+          studying_what: meta.studying_what,
+          interests: meta.interests,
+        }),
       })
-      const { data: profile } = await getProfile(data.user.id)
-      set({ session: data.session, user: data.user, profile, loading: false })
+      if (!res.ok) {
+        const json = await res.json().catch(() => ({}))
+        set({ loading: false })
+        return { error: json.error || 'Failed to save profile' }
+      }
+    } catch {
+      set({ loading: false })
+      return { error: 'Network error saving profile' }
     }
+
+    const { data: profile } = await getProfile(data.user.id)
+    set({ session: data.session, user: data.user, profile, loading: false })
     return { error: null }
   },
 
@@ -96,7 +110,8 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   updateProfile: async (updates) => {
     const { user, profile } = get()
     if (!user || !profile) return
-    const { error } = await supabase.from('profiles').update(updates).eq('id', user.id)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { error } = await (supabase as any).from('profiles').update(updates).eq('id', user.id)
     if (!error) set({ profile: { ...profile, ...updates } })
   },
 }))
