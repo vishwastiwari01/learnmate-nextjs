@@ -4,8 +4,9 @@ import { usePathname } from 'next/navigation'
 import { cn, xpProgress } from '@/lib/utils'
 import { useAuthStore } from '@/store/useAuthStore'
 import { useUserStore } from '@/store/useUserStore'
-import { Home, Swords, BookOpen, Code2, GraduationCap, Map, Settings, LogOut } from 'lucide-react'
+import { Home, Swords, BookOpen, Code2, GraduationCap, Map, Settings, LogOut, Sun, Moon } from 'lucide-react'
 import { useState } from 'react'
+import { useTheme } from 'next-themes'
 import { ApiKeyModal } from '@/components/ui/ApiKeyModal'
 
 const NAV_ITEMS = [
@@ -22,6 +23,7 @@ export function Nav() {
   const { profile, signOut } = useAuthStore()
   const { apiKey } = useUserStore()
   const [showApiModal, setShowApiModal] = useState(false)
+  const { theme, setTheme } = useTheme()
   const progress = profile ? xpProgress(profile.xp) : null
 
   return (
@@ -58,6 +60,13 @@ export function Nav() {
               <div className="text-lg">{profile.avatar}</div>
             </>
           )}
+          <button
+            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+            className="p-2 rounded-lg text-white/50 hover:text-white hover:bg-bg-elevated transition-all"
+            title="Toggle theme"
+          >
+            {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
+          </button>
           <button onClick={() => setShowApiModal(true)}
             className={cn('p-2 rounded-lg transition-all text-sm',
               apiKey ? 'text-brand-green hover:bg-brand-green/10' : 'text-brand-orange hover:bg-brand-orange/10 animate-pulse'
@@ -73,7 +82,7 @@ export function Nav() {
       </nav>
 
       {/* MOBILE BOTTOM NAV */}
-      <nav className="mobile-nav md:hidden fixed bottom-0 left-0 right-0 z-50 bg-bg-surface/95 border-t border-white/[0.08] backdrop-blur-xl grid grid-cols-6">
+      <nav className="mobile-nav md:hidden fixed bottom-0 left-0 right-0 z-50 bg-bg-surface/95 border-t border-white/[0.08] backdrop-blur-xl grid grid-cols-7">
         {NAV_ITEMS.map(({ href, label, icon: Icon }) => (
           <Link key={href} href={href}
             className={cn('flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold transition-all',
@@ -83,6 +92,13 @@ export function Nav() {
             {label}
           </Link>
         ))}
+        <button
+          onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+          className="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-white/30 transition-all"
+        >
+          {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+          Theme
+        </button>
       </nav>
 
       {showApiModal && <ApiKeyModal onClose={() => setShowApiModal(false)} />}
