@@ -62,7 +62,7 @@ function md(text: string): string {
 
 export default function LearnPage() {
   const { profile } = useAuthStore()
-  const { apiKey, aiModel, setAIModel } = useUserStore()
+  const { apiKey, groqKey, aiModel, setAIModel } = useUserStore()
   const [convos, setConvos] = useState<Conversation[]>([])
   const [activeId, setActiveId] = useState<string|null>(null)
   const [input, setInput] = useState('')
@@ -127,7 +127,7 @@ export default function LearnPage() {
       const r=await fetch('/api/ai/chat',{method:'POST',headers:{'Content-Type':'application/json'},
         body:JSON.stringify({messages:history,subject:'anything',mode:'chat',
           userContext:profile?`${profile.studying_what}, interests: ${profile.interests.join(', ')}`:'',
-          model:aiModel})})
+          model:aiModel, apiKey, groqKey})})
       const data=await r.json()
       addMsg({id:genId(),role:'assistant',content:data.content||'⚠️ '+(data.error||'Error. Check API key ⚙️'),timestamp:Date.now()})
     } catch {

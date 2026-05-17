@@ -5,6 +5,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;600;700&display=swap');
 
 :root {
+  --bg:     #FAFAFA;
+  --bg1:    #F4F4F5;
+  --bg2:    #E4E4E7;
+  --bg3:    #D4D4D8;
+  --b:      rgba(0,0,0,0.06);
+  --b2:     rgba(0,0,0,0.11);
+  --b3:     rgba(0,0,0,0.18);
+  --text:   #09090B;
+  --text2:  #52525B;
+  --text3:  #71717A;
+  --orange: #FF6B2B;
+  --yellow: #F5C542;
+  --green:  #10B981;
+  --cyan:   #06B6D4;
+  --purple: #6366F1;
+  --pink:   #EC4899;
+  --red:    #EF4444;
+}
+
+.dark {
   --bg:     #07090F;
   --bg1:    #0D1017;
   --bg2:    #111520;
@@ -45,10 +65,13 @@ body {
 
 /* GLASS CARD */
 .glass {
-  background: rgba(13,16,23,0.7);
+  background: rgba(255,255,255,0.7);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--b2);
+}
+.dark .glass {
+  background: rgba(13,16,23,0.7);
 }
 
 /* GRADIENT TEXT */
@@ -90,7 +113,7 @@ canvas { display: block; }
 
 /* ROADMAP CONNECTOR LINE */
 .roadmap-line {
-  stroke: rgba(255,255,255,0.08);
+  stroke: var(--b2);
   stroke-width: 2;
   stroke-dasharray: 6 4;
 }

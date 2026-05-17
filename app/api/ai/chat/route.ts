@@ -4,7 +4,7 @@ import type { ORMessage } from '@/lib/openrouter'
 
 export async function POST(req: NextRequest) {
   try {
-    const { messages, subject, mode, userContext, model } = await req.json()
+    const { messages, subject, mode, userContext, model, apiKey, groqKey } = await req.json()
 
     const systemPrompt = mode === 'chat'
       ? `You are LearnMate AI — a brilliant, friendly tutor. You can help with ANY topic: academics, coding, science, history, creative writing, research, anything.
@@ -25,7 +25,7 @@ Format responses clearly. Use **bold**, bullet points, and examples. Be engaging
       ...messages,
     ]
 
-    const response = await callAI(fullMessages, { maxTokens: 1000, model })
+    const response = await callAI(fullMessages, { maxTokens: 1000, model, apiKey, groqKey })
     return NextResponse.json({ content: response })
   } catch (e: unknown) {
     const msg = e instanceof Error ? e.message : 'AI error'

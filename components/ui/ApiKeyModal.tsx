@@ -14,16 +14,17 @@ const MODELS = [
 ]
 
 export function ApiKeyModal({ onClose }: { onClose: () => void }) {
-  const { apiKey, grokKey, aiModel, setApiKey, setGrokKey, setAIModel } = useUserStore()
+  const { apiKey, grokKey, groqKey, aiModel, setApiKey, setGrokKey, setGroqKey, setAIModel } = useUserStore()
   const [key, setKey] = useState(apiKey)
   const [grok, setGrok] = useState(grokKey)
+  const [groq, setGroq] = useState(groqKey)
   const [model, setModel] = useState(aiModel)
   const [saved, setSaved] = useState(false)
 
   function handleSave() {
-    if (!key.trim()) return
-    setApiKey(key.trim())
+    if (key.trim()) setApiKey(key.trim())
     if (grok.trim()) setGrokKey(grok.trim())
+    if (groq.trim()) setGroqKey(groq.trim())
     setAIModel(model)
     setSaved(true)
     setTimeout(onClose, 1000)
@@ -68,7 +69,9 @@ export function ApiKeyModal({ onClose }: { onClose: () => void }) {
                 className="w-full bg-bg-surface border border-white/10 rounded-xl px-4 py-3 text-sm font-mono text-white placeholder-white/20 outline-none focus:border-brand-orange/50 transition-colors"
               />
             </div>
-            <div>Grok API Key (Optional)</label>
+
+            <div>
+              <label className="text-[11px] font-bold text-white/30 uppercase tracking-widest block mb-1.5">Grok API Key (Optional)</label>
               <input
                 type="password"
                 value={grok}
@@ -77,8 +80,19 @@ export function ApiKeyModal({ onClose }: { onClose: () => void }) {
                 className="w-full bg-bg-surface border border-white/10 rounded-xl px-4 py-3 text-sm font-mono text-white placeholder-white/20 outline-none focus:border-brand-cyan/50 transition-colors"
               />
             </div>
+
             <div>
-              <label className="text-[11px] font-bold text-white/30 uppercase tracking-widest block mb-1.5">
+              <label className="text-[11px] font-bold text-white/30 uppercase tracking-widest block mb-1.5">Groq API Key (Optional)</label>
+              <input
+                type="password"
+                value={groq}
+                onChange={e => setGroq(e.target.value)}
+                placeholder="gsk_..."
+                className="w-full bg-bg-surface border border-white/10 rounded-xl px-4 py-3 text-sm font-mono text-white placeholder-white/20 outline-none focus:border-brand-orange/50 transition-colors"
+              />
+            </div>
+
+            <div>
               <label className="text-[11px] font-bold text-white/30 uppercase tracking-widest block mb-1.5">AI Model</label>
               <select
                 value={model}

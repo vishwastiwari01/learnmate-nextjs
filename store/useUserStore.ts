@@ -9,12 +9,14 @@ interface UserStore {
   isOnboarded: boolean
   apiKey: string
   grokKey: string
+  groqKey: string
   aiModel: string
   setOnboarding: (data: OnboardingData) => void
   addXP: (amount: number) => void
   incrementStreak: () => void
   setApiKey: (key: string) => void
   setGrokKey: (key: string) => void
+  setGroqKey: (key: string) => void
   setAIModel: (model: string) => void
   reset: () => void
 }
@@ -28,6 +30,7 @@ export const useUserStore = create<UserStore>()(
       isOnboarded: false,
       apiKey: '',
       grokKey: '',
+      groqKey: '',
       aiModel: DEFAULT_MODEL,
 
       setOnboarding: (data) => {
@@ -61,6 +64,7 @@ export const useUserStore = create<UserStore>()(
 
       setApiKey: (key) => set({ apiKey: key }),
       setGrokKey: (key) => set({ grokKey: key }),
+      setGroqKey: (key) => set({ groqKey: key }),
       setAIModel: (model) => set({ aiModel: model }),
       reset: () => set({ user: null, isOnboarded: false }),
     }),

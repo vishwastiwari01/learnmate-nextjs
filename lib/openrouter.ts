@@ -5,21 +5,45 @@ export interface ORMessage {
 
 export async function callAI(
   messages: ORMessage[],
-  options?: { maxTokens?: number; temperature?: number; model?: string }
+  options?: { maxTokens?: number; temperature?: number; model?: string; useGroq?: boolean; apiKey?: string; groqKey?: string }
 ): Promise<string> {
-  const apiKey = process.env.OPENROUTER_API_KEY
-  if (!apiKey) throw new Error('OPENROUTER_API_KEY not set in .env.local')
+  const orKey = options?.apiKey || process.env.OPENROUTER_API_KEY
+  const groqKey = options?.groqKey || process.env.GROQ_API_KEY
+  
+  // Prefer Groq if key exists and either explicitly requested OR OpenRouter key is missing
+  const useGroq = groqKey && (options?.useGroq !== false || !orKey)
 
-  const model = options?.model ?? 'meta-llama/llama-3.1-8b-instruct'
+  if (!orKey && !groqKey) {
+    throw new Error('Neither OPENROUTER_API_KEY nor GROQ_API_KEY is set in .env.local')
+  }
 
-  const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+  let endpoint = ''
+  let apiKey = ''
+  let headers: Record<string, string> = { 'Content-Type': 'application/json' }
+  let model = options?.model ?? 'meta-llama/llama-3.1-8b-instruct'
+
+  if (useGroq) {
+    endpoint = 'https://api.groq.com/openai/v1/chat/completions'
+    apiKey = groqKey as string
+    headers['Authorization'] = `Bearer ${apiKey}`
+    
+    // Map OpenRouter models to Groq equivalents if possible
+    if (model.includes('llama-3.1')) model = 'llama-3.1-8b-instant'
+    else if (model.includes('llama3')) model = 'llama3-8b-8192'
+    else if (model.includes('mixtral')) model = 'mixtral-8x7b-32768'
+    else if (model.includes('gemma')) model = 'gemma2-9b-it'
+    else model = 'llama-3.1-8b-instant' // Default Groq model
+  } else {
+    endpoint = 'https://openrouter.ai/api/v1/chat/completions'
+    apiKey = orKey as string
+    headers['Authorization'] = `Bearer ${apiKey}`
+    headers['HTTP-Referer'] = 'https://learnmate.app'
+    headers['X-Title'] = 'LearnMate'
+  }
+
+  const res = await fetch(endpoint, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`,
-      'HTTP-Referer': 'https://learnmate.app',
-      'X-Title': 'LearnMate',
-    },
+    headers,
     body: JSON.stringify({
       model,
       messages,
@@ -29,7 +53,11 @@ export async function callAI(
   })
 
   const data = await res.json()
-  if (data.error) throw new Error(data.error.message)
+  
+  if (!res.ok || data.error) {
+    throw new Error(data.error?.message || `API Error: ${res.statusText}`)
+  }
+  
   return data.choices[0].message.content as string
 }
 

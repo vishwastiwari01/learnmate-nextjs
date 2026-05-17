@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
+  darkMode: 'class',
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -14,20 +15,22 @@ const config: Config = {
         mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {
+        white: 'var(--text)',
+        black: 'var(--bg)',
         bg: {
-          base:     '#07090F',
-          surface:  '#0D1017',
-          elevated: '#111520',
-          card:     '#161B28',
+          base:     'var(--bg)',
+          surface:  'var(--bg1)',
+          elevated: 'var(--bg2)',
+          card:     'var(--bg3)',
         },
         brand: {
-          orange: '#FF6B2B',
-          yellow: '#F5C542',
-          green:  '#00D68F',
-          cyan:   '#00C9E4',
-          purple: '#7C3AED',
-          pink:   '#FF4FA3',
-          red:    '#FF4757',
+          orange: 'var(--orange)',
+          yellow: 'var(--yellow)',
+          green:  'var(--green)',
+          cyan:   'var(--cyan)',
+          purple: 'var(--purple)',
+          pink:   'var(--pink)',
+          red:    'var(--red)',
         },
       },
       animation: {

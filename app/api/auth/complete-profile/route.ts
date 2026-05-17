@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
     const supabase = getServerClient()
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('profiles')
       .upsert(
         {
@@ -21,11 +21,14 @@ export async function POST(req: NextRequest) {
         },
         { onConflict: 'id' }
       )
+      .select()
+      .single()
+
     if (error) {
       console.error('Profile upsert error:', error)
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
-    return NextResponse.json({ success: true })
+    return NextResponse.json({ success: true, data })
   } catch (err) {
     console.error('complete-profile error:', err)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
