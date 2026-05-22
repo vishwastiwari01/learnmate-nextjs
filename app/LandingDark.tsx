@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/store/useAuthStore'
 import { motion, useAnimation, useInView } from 'framer-motion'
 import Link from 'next/link'
+import TractionSection from '@/components/ui/TractionSection'
 
 /* ─── MAGIC UI CSS & ANIMATIONS ─────────────────────────────────── */
 const styles = `
@@ -254,6 +255,11 @@ export default function LandingDark({ toggleTheme }: { toggleTheme: () => void }
         </div>
       </div>
       
+      {/* TRACTION */}
+      <div className="relative z-10">
+        <TractionSection />
+      </div>
+
       {/* FOOTER */}
       <footer className="relative z-10 border-t border-white/10 mt-12 py-10">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">

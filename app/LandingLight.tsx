@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import TractionSection from "@/components/ui/TractionSection";
 
 /* ─── DESIGN TOKENS (Magic UI / 21st.dev Style) ─────────────── */
 const T = {
@@ -392,6 +393,7 @@ export default function LearnMateLight({ toggleTheme }: { toggleTheme: () => voi
       <Hero />
       <MagicMarquee />
       <Features />
+      <TractionSection />
       <CTAFooter />
     </div>
   );
