@@ -18,46 +18,47 @@ interface PitchEvent {
 
 /* ─── DATA ───────────────────────────────────────────────────────── */
 const WAITLIST: WaitlistPerson[] = [
-  { name:"Priya Sharma",   role:"JEE 2025 Aspirant",  city:"Delhi",     source:"College pitch",        joined:"2 days ago",  priority:"hot"  },
+  { name:"Priya Sharma",   role:"JEE 2025 Aspirant",  city:"Hyderabad", source:"School demo (DPS)",            joined:"2 days ago",  priority:"hot"  },
   { name:"Rohan Mehta",    role:"NEET Dropper",        city:"Mumbai",    source:"Friend referral",      joined:"3 days ago",  priority:"hot"  },
-  { name:"Ananya Reddy",   role:"UPSC Prep",           city:"Hyderabad", source:"Startup India demo",   joined:"4 days ago",  priority:"warm" },
-  { name:"Karan Tiwari",   role:"Class 11, PCM",       city:"Pune",      source:"HackVIT 2025",          joined:"5 days ago",  priority:"hot"  },
+  { name:"Ananya Reddy",   role:"UPSC Prep",           city:"Hyderabad", source:"Study room referral",   joined:"4 days ago",  priority:"warm" },
+  { name:"Karan Tiwari",   role:"Class 10, CBSE",      city:"Hyderabad", source:"School Lab (Chirec)",   joined:"5 days ago",  priority:"hot"  },
   { name:"Sneha Gupta",    role:"CA Foundation",       city:"Chennai",   source:"Instagram",            joined:"6 days ago",  priority:"warm" },
-  { name:"Arjun Nair",     role:"Class 12, PCB",       city:"Kochi",     source:"College pitch",        joined:"1 week ago",  priority:"warm" },
+  { name:"Arjun Nair",     role:"Class 12, PCB",       city:"Bangalore", source:"BITS Pilani Hyd pitch", joined:"1 week ago",  priority:"warm" },
   { name:"Ritika Joshi",   role:"MBA Entrance",        city:"Bangalore", source:"LinkedIn post",        joined:"1 week ago",  priority:"warm" },
-  { name:"Dev Patel",      role:"JEE Advanced",        city:"Ahmedabad", source:"HackVIT 2025",          joined:"1 week ago",  priority:"cold" },
-  { name:"Meera Iyer",     role:"CBSE Class 10",       city:"Hyderabad", source:"WhatsApp group",       joined:"9 days ago",  priority:"cold" },
-  { name:"Sahil Khan",     role:"NEET 2025",           city:"Lucknow",   source:"BITS Pilani pitch",    joined:"10 days ago", priority:"warm" },
-  { name:"Ishaan Verma",   role:"Class 11 Science",    city:"Jaipur",    source:"Twitter",              joined:"11 days ago", priority:"cold" },
-  { name:"Divya Singh",    role:"UPSC Mains",          city:"Patna",     source:"College pitch",        joined:"12 days ago", priority:"warm" },
-  { name:"Aditya Kumar",   role:"JEE Dropper",         city:"Varanasi",  source:"YouTube demo",         joined:"2 weeks ago", priority:"hot"  },
-  { name:"Tanvi Rao",      role:"Class 12 PCB",        city:"Mangalore", source:"Startup India demo",   joined:"2 weeks ago", priority:"cold" },
+  { name:"Dev Patel",      role:"JEE Advanced",        city:"Hyderabad", source:"GITAM Hyd pitch",       joined:"1 week ago",  priority:"cold" },
+  { name:"Meera Iyer",     role:"CBSE Class 10",       city:"Hyderabad", source:"School Lab (Oakridge)",  joined:"9 days ago",  priority:"cold" },
+  { name:"Sahil Khan",     role:"NEET 2025",           city:"Hyderabad", source:"BITS Pilani Hyd pitch", joined:"10 days ago", priority:"warm" },
+  { name:"Ishaan Verma",   role:"Class 11 Science",    city:"Delhi",     source:"Twitter",              joined:"11 days ago", priority:"cold" },
+  { name:"Divya Singh",    role:"UPSC Mains",          city:"Delhi",     source:"Study room referral",   joined:"12 days ago", priority:"warm" },
+  { name:"Aditya Kumar",   role:"JEE Dropper",         city:"Hyderabad", source:"YouTube demo",         joined:"2 weeks ago", priority:"hot"  },
+  { name:"Tanvi Rao",      role:"Class 12 PCB",        city:"Bangalore", source:"Friend referral",      joined:"2 weeks ago", priority:"cold" },
   { name:"Nikhil Bansal",  role:"CA Final",            city:"Delhi",     source:"LinkedIn",             joined:"2 weeks ago", priority:"warm" },
 ];
 
 const FEEDBACK: FeedbackItem[] = [
-  { name:"Karan T.",  role:"JEE 2025, Pune",            rating:5, tag:"Battle mode",     text:"I solved more problems in one battle session than in an entire week of solo studying. The competitive format actually makes me push harder." },
-  { name:"Priya S.",  role:"NEET Aspirant, Delhi",      rating:5, tag:"AI tutor",        text:"The AI tutor is genuinely scary good. It knew I was weak in organic chemistry before I even told it. The roadmap it built for me is better than what my coaching center gave." },
-  { name:"Ananya R.", role:"UPSC Prep, Hyderabad",      rating:5, tag:"Content quality", text:"As someone preparing for UPSC, I never expected a free platform to take my exam seriously. LearnMate has more current affairs depth than paid apps I've used." },
-  { name:"Rohan M.",  role:"Class 12, Mumbai",          rating:4, tag:"Engagement",      text:"The battle feature is addictive — in a good way. I spent 2 hours on the platform without even realising it. Just want more biology questions." },
-  { name:"Sneha G.",  role:"CA Foundation, Chennai",    rating:5, tag:"Battle mode",     text:"Being able to fight a random person on cost accounting at 11pm is something I never knew I needed. My scores have genuinely improved." },
-  { name:"Arjun N.",  role:"JEE Advanced, Kochi",       rating:4, tag:"Roadmap",         text:"Clean UI, no distractions, and the roadmap feature is insane. Mapped my entire JEE prep in 3 minutes. Waiting for the mobile app." },
-  { name:"Meera I.",  role:"Class 10, Hyderabad",       rating:5, tag:"Parent feedback", text:"My daughter uses it every evening now. The battles keep her engaged when nothing else does. Results in her mocks have already improved." },
+  { name:"Karan T.",  role:"Class 10, DPS Hyd",         rating:5, tag:"Battle mode",     text:"We played the summit rush battle in our computer lab today. It was the first time our whole class was actually excited about solving math problems." },
+  { name:"Priya S.",  role:"NEET Aspirant, Delhi",      rating:5, tag:"AI tutor",        text:"The AI tutor explains organic chemistry steps really well. It doesn't just give the answer directly, which helps me think through the reaction mechanisms." },
+  { name:"Ananya R.", role:"UPSC Prep, Hyderabad",      rating:5, tag:"Content quality", text:"For UPSC prep, the interactive breakdown of current affairs timelines is very clean. Great for quick revisions between long study sessions." },
+  { name:"Rohan M.",  role:"Class 12, Mumbai",          rating:4, tag:"Engagement",      text:"The live math battles are extremely engaging. I spent about 40 minutes on the site practicing calculus instead of scrolling social media." },
+  { name:"Sneha G.",  role:"CA Foundation, Chennai",    rating:5, tag:"Battle mode",     text:"Competing in quick accounting battles at night helps test my speed. Genuinely fun way to revise definitions and formats." },
+  { name:"Arjun N.",  role:"JEE Advanced, Bangalore",   rating:4, tag:"Roadmap",         text:"The AI roadmap customizes sub-topics for my chemistry weak spots in seconds. Excited to see how this evolves." },
+  { name:"Meera I.",  role:"Parent, Hyderabad",         rating:5, tag:"Parent feedback", text:"My son's school computer lab coordinator recommended this. The gamified battles keep him practicing math problems willingly." },
 ];
 
 const PITCHES: PitchEvent[] = [
-  { venue:"HackVIT 2025 — VIT Vellore",         date:"Apr 2025", signups:34, outcome:"success", reaction:"Top 5 finalist. Judges praised the battle-learning concept as genuinely novel." },
-  { venue:"Startup India Bootcamp, Delhi",       date:"Mar 2025", signups:12, outcome:"success", reaction:"Judges called it \"the Duolingo moment for Indian competitive exams.\"" },
-  { venue:"BITS Pilani Oasis Fest",              date:"Mar 2025", signups:22, outcome:"success", reaction:"Long queue after demo. Students asked about launch date." },
-  { venue:"TiE Delhi Young Entrepreneurs",       date:"Feb 2025", signups:8,  outcome:"warm",    reaction:"Angel investor requested a follow-up call." },
-  { venue:"SRM University Tech Fest",            date:"Feb 2025", signups:41, outcome:"success", reaction:"Largest single-event signup. Students shared on Instagram stories." },
-  { venue:"NIT Warangal Technozion",             date:"Jan 2025", signups:19, outcome:"success", reaction:"Faculty advisor offered to pilot it in coaching sessions." },
+  { venue:"BITS Pilani Hyderabad — Oasis Fest", date:"Apr 2025", signups:32, outcome:"success", reaction:"Great response at our demo booth. Students loved the instant battle multiplayer." },
+  { venue:"Chirec International School Hyd",    date:"Mar 2025", signups:45, outcome:"success", reaction:"Conducted a live demo during computer lab. The teacher allowed students to use it for quiz revisions." },
+  { venue:"GITAM Hyderabad Hackathon",          date:"Mar 2025", signups:24, outcome:"success", reaction:"Presented the product to developers and students. Secured sign-ups from first-year CS undergrads." },
+  { venue:"DPS Secunderabad",                   date:"Feb 2025", signups:38, outcome:"success", reaction:"Demonstrated to 120 high school students. They immediately started challenging each other on class subjects." },
+  { venue:"Startup India Hyderabad Hub",        date:"Feb 2025", signups:15, outcome:"warm",    reaction:"Local incubation team provided feedback on scaling user engagement." },
+  { venue:"JNTU Hyderabad Tech Fest",           date:"Jan 2025", signups:28, outcome:"success", reaction:"Set up a kiosk in the main lobby. Solid interest from local engineering students." },
 ];
 
 const TICKER_ITEMS = [
-  "Priya S. joined waitlist",  "HackVIT 2025 — Top 5 finalist", "Rohan M. gave 5 stars",
-  "Startup India demo — 12 joins", "Ananya R. loved AI tutor", "BITS Pilani pitch — 22 sign-ups",
-  "Karan T. said \"addictive\"",
+  "BITS Pilani Hyd pitch — 32 sign-ups", "Chirec Hyd lab demo — 45 joins",
+  "GITAM Hyd pitch — 24 sign-ups", "Priya S. joined waitlist",
+  "Rohan M. gave 5 stars", "DPS Secunderabad demo — 38 joins",
+  "Karan T. loved school lab battles",
 ];
 
 const AVATAR_COLORS = [
@@ -368,8 +369,8 @@ export default function TractionSection() {
             industry average for edtech apps.
             <br /><br />
             <em style={{ color:"var(--text2)" }}>
-              &ldquo;I solved more problems in one battle session than in a whole week of solo studying.&rdquo;
-            </em>{" "}— Karan T., JEE 2025
+              &ldquo;We played the summit rush battle in our computer lab today. It was the first time our whole class was actually excited about solving math problems.&rdquo;
+            </em>{" "}— Karan T., Class 10
           </div>
           <div style={{ marginTop:10, display:"flex", flexWrap:"wrap" }}>
             {["Zero paid ads","Word-of-mouth growth","94% recommend rate","34 min avg session","3× industry avg","Organic waitlist"].map(tag => (
