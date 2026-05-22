@@ -17,8 +17,8 @@ export default function Page() {
   }
 
   return theme === 'light' ? (
-    <LandingLight toggleTheme={toggleTheme} />
+    <LandingLight toggleTheme={toggleTheme} theme={theme} />
   ) : (
-    <LandingDark toggleTheme={toggleTheme} />
+    <LandingDark toggleTheme={toggleTheme} theme={theme} />
   )
 }

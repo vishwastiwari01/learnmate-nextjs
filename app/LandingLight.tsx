@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import TractionSection from "@/components/ui/TractionSection";
+import ThemeSwitch from "@/components/ui/ThemeSwitch";
 
 /* ─── DESIGN TOKENS (Magic UI / 21st.dev Style) ─────────────── */
 const T = {
@@ -143,7 +144,7 @@ function BorderBeam({ size = 200, duration = 15, anchor = 90, borderWidth = 1.5,
 }
 
 /* ─── NAVBAR ─────────────────────────────────────────────────────── */
-function Navbar({ toggleTheme }: { toggleTheme: () => void }) {
+function Navbar({ toggleTheme, theme }: { toggleTheme: () => void; theme: string | undefined }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 20);
@@ -177,13 +178,10 @@ function Navbar({ toggleTheme }: { toggleTheme: () => void }) {
         ))}
       </div>
 
-      <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-        <button onClick={toggleTheme} style={{
-          width: 36, height: 36, borderRadius: "50%", background: "transparent", border: "none",
-          display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, cursor: "pointer",
-        }}>🌙</button>
+      <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+        <ThemeSwitch theme={theme} toggleTheme={toggleTheme} />
         <Link href="/auth" style={{
-          background: T.text, color: "#fff", fontSize: 13, fontWeight: 600, textDecoration: "none",
+          background: T.text, color: "#fff", fontSize: 13, fontStyle: "normal", fontWeight: 600, textDecoration: "none",
           padding: "8px 16px", borderRadius: 9999,
         }}>Get Started</Link>
       </div>
@@ -384,11 +382,11 @@ function CTAFooter() {
 }
 
 /* ─── ROOT ───────────────────────────────────────────────────────── */
-export default function LearnMateLight({ toggleTheme }: { toggleTheme: () => void }) {
+export default function LearnMateLight({ toggleTheme, theme }: { toggleTheme: () => void; theme: string | undefined }) {
   return (
     <div className="light-theme-body">
       <style>{G}</style>
-      <Navbar toggleTheme={toggleTheme} />
+      <Navbar toggleTheme={toggleTheme} theme={theme} />
       <Hero />
       <MagicMarquee />
       <Features />

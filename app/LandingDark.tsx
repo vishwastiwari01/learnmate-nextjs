@@ -5,6 +5,7 @@ import { useAuthStore } from '@/store/useAuthStore'
 import { motion, useAnimation, useInView } from 'framer-motion'
 import Link from 'next/link'
 import TractionSection from '@/components/ui/TractionSection'
+import ThemeSwitch from '@/components/ui/ThemeSwitch'
 
 /* ─── MAGIC UI CSS & ANIMATIONS ─────────────────────────────────── */
 const styles = `
@@ -102,7 +103,7 @@ const FEATURES = [
   { emoji:'🏆', label:'Live Leaderboard',   desc:'Compete globally, earn XP, climb ranks' },
 ];
 
-export default function LandingDark({ toggleTheme }: { toggleTheme: () => void }) {
+export default function LandingDark({ toggleTheme, theme }: { toggleTheme: () => void; theme: string | undefined }) {
   const router = useRouter()
   const { session, initialize, loading } = useAuthStore()
 
@@ -136,9 +137,7 @@ export default function LandingDark({ toggleTheme }: { toggleTheme: () => void }
           <span className="font-sora font-bold text-xl tracking-tight" style={{ fontFamily: "'Sora', sans-serif" }}>LearnMate</span>
         </div>
         <div className="flex gap-4 items-center">
-          <button onClick={toggleTheme} className="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors" title="Switch to Light Mode">
-            ☀️
-          </button>
+          <ThemeSwitch theme={theme} toggleTheme={toggleTheme} />
           <Link href="/auth" className="text-sm font-medium text-white/60 hover:text-white transition-colors hidden sm:block">
             Sign In
           </Link>
