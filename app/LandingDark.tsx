@@ -131,9 +131,7 @@ export default function LandingDark({ toggleTheme, theme }: { toggleTheme: () =>
       {/* NAVBAR */}
       <nav className="relative z-10 flex items-center justify-between px-6 py-6 max-w-6xl mx-auto">
         <div className="flex items-center gap-2">
-          <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg, #f97316, #eab308)', display: 'flex', alignItems: 'center', justifyItems: 'center', boxShadow: '0 0 10px rgba(249,115,22,0.4)' }}>
-            <span style={{ fontSize: 14, color: 'white', paddingLeft: 7, paddingTop: 3 }}>⚡</span>
-          </div>
+          <img src="/learnmate.png" alt="LearnMate Logo" style={{ height: 28, width: "auto", objectFit: "contain" }} />
           <span className="font-sora font-bold text-xl tracking-tight" style={{ fontFamily: "'Sora', sans-serif" }}>LearnMate</span>
         </div>
         <div className="flex gap-4 items-center">
@@ -263,7 +261,7 @@ export default function LandingDark({ toggleTheme, theme }: { toggleTheme: () =>
       <footer className="relative z-10 border-t border-white/10 mt-12 py-10">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-             <span style={{ fontSize: 14 }}>⚡</span>
+             <img src="/learnmate.png" alt="LearnMate Logo" style={{ height: 20, width: "auto", objectFit: "contain" }} />
              <span className="font-sora font-bold" style={{ fontFamily: "'Sora', sans-serif" }}>LearnMate</span>
           </div>
           <div className="text-center text-xs" style={{ color: 'rgba(255, 255, 255, 0.3)' }}>

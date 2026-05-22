@@ -74,7 +74,10 @@ export default function AuthPage() {
 
       {/* NAV */}
       <nav className="relative z-10 flex items-center justify-between px-6 py-4">
-        <a href="/" className="font-sora font-extrabold text-xl grad-orange">⚡ LearnMate</a>
+        <a href="/" className="flex items-center gap-2 font-sora font-extrabold text-xl grad-orange">
+          <img src="/learnmate.png" alt="LearnMate Logo" style={{ height: '24px', width: 'auto', objectFit: 'contain' }} />
+          LearnMate
+        </a>
       </nav>
 
       <div className="relative z-10 flex flex-col items-center justify-center flex-1 px-4 py-8">
