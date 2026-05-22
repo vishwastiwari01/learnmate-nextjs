@@ -210,8 +210,7 @@ function Hero() {
 
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
         style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#fff", border: `1px solid ${T.border}`, borderRadius: 9999, padding: "6px 16px", marginBottom: 24, boxShadow: "0 2px 8px rgba(0,0,0,0.02)" }}>
-        <span style={{ fontSize: 18 }}>✨</span>
-        <span style={{ fontSize: 13, fontWeight: 600, color: T.textMid }}>Introducing LearnMate 2.0</span>
+        <span style={{ fontSize: 13, fontWeight: 600, color: T.textMid }}>Introducing LearnMate</span>
       </motion.div>
 
       <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}

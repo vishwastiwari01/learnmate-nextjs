@@ -21,11 +21,11 @@ const WAITLIST: WaitlistPerson[] = [
   { name:"Priya Sharma",   role:"JEE 2025 Aspirant",  city:"Delhi",     source:"College pitch",        joined:"2 days ago",  priority:"hot"  },
   { name:"Rohan Mehta",    role:"NEET Dropper",        city:"Mumbai",    source:"Friend referral",      joined:"3 days ago",  priority:"hot"  },
   { name:"Ananya Reddy",   role:"UPSC Prep",           city:"Hyderabad", source:"Startup India demo",   joined:"4 days ago",  priority:"warm" },
-  { name:"Karan Tiwari",   role:"Class 11, PCM",       city:"Pune",      source:"IIT Delhi pitch",      joined:"5 days ago",  priority:"hot"  },
+  { name:"Karan Tiwari",   role:"Class 11, PCM",       city:"Pune",      source:"HackVIT 2025",          joined:"5 days ago",  priority:"hot"  },
   { name:"Sneha Gupta",    role:"CA Foundation",       city:"Chennai",   source:"Instagram",            joined:"6 days ago",  priority:"warm" },
   { name:"Arjun Nair",     role:"Class 12, PCB",       city:"Kochi",     source:"College pitch",        joined:"1 week ago",  priority:"warm" },
   { name:"Ritika Joshi",   role:"MBA Entrance",        city:"Bangalore", source:"LinkedIn post",        joined:"1 week ago",  priority:"warm" },
-  { name:"Dev Patel",      role:"JEE Advanced",        city:"Ahmedabad", source:"IIT Delhi pitch",      joined:"1 week ago",  priority:"cold" },
+  { name:"Dev Patel",      role:"JEE Advanced",        city:"Ahmedabad", source:"HackVIT 2025",          joined:"1 week ago",  priority:"cold" },
   { name:"Meera Iyer",     role:"CBSE Class 10",       city:"Hyderabad", source:"WhatsApp group",       joined:"9 days ago",  priority:"cold" },
   { name:"Sahil Khan",     role:"NEET 2025",           city:"Lucknow",   source:"BITS Pilani pitch",    joined:"10 days ago", priority:"warm" },
   { name:"Ishaan Verma",   role:"Class 11 Science",    city:"Jaipur",    source:"Twitter",              joined:"11 days ago", priority:"cold" },
@@ -46,7 +46,7 @@ const FEEDBACK: FeedbackItem[] = [
 ];
 
 const PITCHES: PitchEvent[] = [
-  { venue:"IIT Delhi — Entrepreneurship Cell",  date:"Apr 2025", signups:38, outcome:"success", reaction:"Standing ovation. 3 professors asked for beta access." },
+  { venue:"HackVIT 2025 — VIT Vellore",         date:"Apr 2025", signups:34, outcome:"success", reaction:"Top 5 finalist. Judges praised the battle-learning concept as genuinely novel." },
   { venue:"Startup India Bootcamp, Delhi",       date:"Mar 2025", signups:12, outcome:"success", reaction:"Judges called it \"the Duolingo moment for Indian competitive exams.\"" },
   { venue:"BITS Pilani Oasis Fest",              date:"Mar 2025", signups:22, outcome:"success", reaction:"Long queue after demo. Students asked about launch date." },
   { venue:"TiE Delhi Young Entrepreneurs",       date:"Feb 2025", signups:8,  outcome:"warm",    reaction:"Angel investor requested a follow-up call." },
@@ -55,7 +55,7 @@ const PITCHES: PitchEvent[] = [
 ];
 
 const TICKER_ITEMS = [
-  "Priya S. joined waitlist", "IIT Delhi pitch — 38 sign-ups", "Rohan M. gave 5 stars",
+  "Priya S. joined waitlist",  "HackVIT 2025 — Top 5 finalist", "Rohan M. gave 5 stars",
   "Startup India demo — 12 joins", "Ananya R. loved AI tutor", "BITS Pilani pitch — 22 sign-ups",
   "Karan T. said \"addictive\"",
 ];
