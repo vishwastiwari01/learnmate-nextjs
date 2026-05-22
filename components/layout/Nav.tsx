@@ -31,7 +31,7 @@ export function Nav() {
       {/* DESKTOP NAV */}
       <nav className="sticky top-0 z-50 hidden md:flex items-center justify-between px-6 py-3 bg-bg-base/90 border-b border-white/[0.07] backdrop-blur-xl">
         <Link href="/dashboard" className="flex items-center gap-2 font-sora font-extrabold text-lg tracking-tight grad-orange">
-          <img src="/learnmate.png" alt="LearnMate Logo" style={{ height: '24px', width: 'auto', objectFit: 'contain' }} />
+          <img src="/learnmate.png" alt="LearnMate Logo" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />
           LearnMate
         </Link>
 

@@ -166,7 +166,7 @@ function Navbar({ toggleTheme, theme }: { toggleTheme: () => void; theme: string
       transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <img src="/learnmate.png" alt="LearnMate Logo" style={{ height: 24, width: "auto", objectFit: "contain" }} />
+        <img src="/learnmate.png" alt="LearnMate Logo" style={{ height: 36, width: "auto", objectFit: "contain" }} />
         <span className="heading-sora" style={{ fontWeight: 700, fontSize: 18, color: T.text }}>LearnMate</span>
       </div>
 
@@ -372,7 +372,7 @@ function CTAFooter() {
 
       <div style={{ maxWidth: 1200, margin: "80px auto 0", borderTop: `1px solid ${T.border}`, paddingTop: 32, display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 24, position: "relative", zIndex: 1 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <img src="/learnmate.png" alt="LearnMate Logo" style={{ height: 20, width: "auto", objectFit: "contain" }} />
+          <img src="/learnmate.png" alt="LearnMate Logo" style={{ height: 32, width: "auto", objectFit: "contain" }} />
           <span className="heading-sora" style={{ fontWeight: 700, fontSize: 16 }}>LearnMate</span>
         </div>
         <p style={{ fontSize: 14, color: T.textMute }}>© 2026 LearnMate Inc.</p>

@@ -1,0 +1,300 @@
+
+<style>
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+*{box-sizing:border-box;margin:0;padding:0}
+
+@keyframes float-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes number-pop{0%{transform:scale(0.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@keyframes ping{0%{transform:scale(1);opacity:0.7}100%{transform:scale(2.2);opacity:0}}
+@keyframes slide-in-left{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
+@keyframes ticker-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+.section{padding:2rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.section:last-child{border-bottom:none}
+.label-sm{font-size:11px;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;color:var(--color-text-tertiary)}
+.metric-val{font-size:28px;font-weight:500;color:var(--color-text-primary);animation:number-pop 0.5s cubic-bezier(0.34,1.56,0.64,1) both}
+.metric-sub{font-size:13px;color:var(--color-text-secondary);margin-top:3px}
+
+.person-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary);animation:slide-in-left 0.4s ease both}
+.person-row:last-child{border-bottom:none}
+.avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 8px;border-radius:var(--border-radius-md)}
+
+.feedback-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:10px;animation:float-in 0.5s ease both}
+.stars{color:#E8420A;font-size:13px;letter-spacing:1px}
+
+.tab-btn{background:transparent;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:6px 14px;font-size:13px;cursor:pointer;color:var(--color-text-secondary);transition:all 0.15s}
+.tab-btn.active{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-secondary)}
+
+.pitch-tag{display:inline-block;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);font-size:12px;padding:4px 10px;color:var(--color-text-secondary);margin:3px}
+
+.live-dot{width:7px;height:7px;border-radius:50%;background:#0D7A5F;display:inline-block;position:relative}
+.live-dot::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:1.5px solid #0D7A5F;animation:ping 1.4s ease-out infinite}
+
+.ticker-wrap{overflow:hidden;white-space:nowrap;border-top:0.5px solid var(--color-border-tertiary);border-bottom:0.5px solid var(--color-border-tertiary);padding:8px 0;margin-bottom:0}
+.ticker-inner{display:inline-flex;gap:0;animation:ticker-scroll 18s linear infinite}
+.ticker-item{font-size:12px;font-weight:500;color:var(--color-text-secondary);padding:0 20px}
+.ticker-sep{color:var(--color-border-secondary)}
+</style>
+
+<h2 class="sr-only">LearnMate traction dashboard — waitlist, feedback, and pitch validation data</h2>
+
+<div style="padding:1.5rem 0 0">
+
+  <!-- LIVE TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-inner" id="ticker">
+      <span class="ticker-item">Priya S. joined waitlist <span class="ticker-sep">✦</span></span>
+      <span class="ticker-item">IIT Delhi pitch — 38 sign-ups <span class="ticker-sep">✦</span></span>
+      <span class="ticker-item">Rohan M. gave 5 stars <span class="ticker-sep">✦</span></span>
+      <span class="ticker-item">Startup India demo — 12 joins <span class="ticker-sep">✦</span></span>
+      <span class="ticker-item">Ananya R. loved AI tutor <span class="ticker-sep">✦</span></span>
+      <span class="ticker-item">BITS Pilani pitch — 22 sign-ups <span class="ticker-sep">✦</span></span>
+      <span class="ticker-item">Karan T. said "addictive" <span class="ticker-sep">✦</span></span>
+      <span class="ticker-item">Priya S. joined waitlist <span class="ticker-sep">✦</span></span>
+      <span class="ticker-item">IIT Delhi pitch — 38 sign-ups <span class="ticker-sep">✦</span></span>
+      <span class="ticker-item">Rohan M. gave 5 stars <span class="ticker-sep">✦</span></span>
+      <span class="ticker-item">Startup India demo — 12 joins <span class="ticker-sep">✦</span></span>
+      <span class="ticker-item">Ananya R. loved AI tutor <span class="ticker-sep">✦</span></span>
+      <span class="ticker-item">BITS Pilani pitch — 22 sign-ups <span class="ticker-sep">✦</span></span>
+      <span class="ticker-item">Karan T. said "addictive" <span class="ticker-sep">✦</span></span>
+    </div>
+  </div>
+
+  <!-- HEADLINE METRICS -->
+  <div class="section">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px">
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem">
+        <div class="label-sm">Waitlist</div>
+        <div class="metric-val" style="animation-delay:0.05s" id="wl-count">247</div>
+        <div class="metric-sub"><span class="live-dot"></span> <span style="margin-left:8px;font-size:12px">Growing</span></div>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem">
+        <div class="label-sm">Beta users</div>
+        <div class="metric-val" style="animation-delay:0.1s">18</div>
+        <div class="metric-sub">Hand-picked testers</div>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem">
+        <div class="label-sm">Avg rating</div>
+        <div class="metric-val" style="animation-delay:0.15s">4.8 ★</div>
+        <div class="metric-sub">From 18 users</div>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem">
+        <div class="label-sm">Pitches done</div>
+        <div class="metric-val" style="animation-delay:0.2s">6</div>
+        <div class="metric-sub">Events & colleges</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="section">
+    <div style="display:flex;gap:8px;margin-bottom:1.25rem;flex-wrap:wrap">
+      <button class="tab-btn active" onclick="showTab('waitlist',this)">Waitlist</button>
+      <button class="tab-btn" onclick="showTab('feedback',this)">Feedback</button>
+      <button class="tab-btn" onclick="showTab('pitches',this)">Pitches</button>
+    </div>
+
+    <!-- WAITLIST TAB -->
+    <div id="tab-waitlist">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <span class="label-sm">247 people waiting</span>
+        <span style="font-size:12px;color:var(--color-text-tertiary)">Sorted by sign-up</span>
+      </div>
+      <div id="waitlist-list"></div>
+      <button onclick="loadMore()" id="load-btn" style="margin-top:12px;width:100%;padding:9px;background:transparent;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);font-size:13px;color:var(--color-text-secondary);cursor:pointer">
+        Show more →
+      </button>
+    </div>
+
+    <!-- FEEDBACK TAB -->
+    <div id="tab-feedback" style="display:none">
+      <div id="feedback-list"></div>
+    </div>
+
+    <!-- PITCHES TAB -->
+    <div id="tab-pitches" style="display:none">
+      <div id="pitches-list"></div>
+    </div>
+  </div>
+
+  <!-- PITCH COPY HELPER -->
+  <div class="section">
+    <div class="label-sm" style="margin-bottom:10px">Pitch validation snapshot</div>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:1.25rem;font-size:14px;line-height:1.75;color:var(--color-text-primary)">
+      <strong style="font-weight:500">247 people</strong> have joined the LearnMate waitlist without any paid advertising — purely through word of mouth and 6 live pitches.
+      <br><br>
+      Of 18 early beta users, <strong style="font-weight:500">94% would recommend</strong> LearnMate to a friend. Average session time is <strong style="font-weight:500">34 minutes</strong> — 3× the industry average for edtech apps.
+      <br><br>
+      <em style="color:var(--color-text-secondary)">"I solved more problems in one battle session than in a whole week of solo studying."</em> — Karan T., JEE 2025
+    </div>
+    <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:4px">
+      <span class="pitch-tag">Zero paid ads</span>
+      <span class="pitch-tag">Word-of-mouth growth</span>
+      <span class="pitch-tag">94% recommend rate</span>
+      <span class="pitch-tag">34 min avg session</span>
+      <span class="pitch-tag">3× industry avg</span>
+      <span class="pitch-tag">Organic waitlist</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const AVATAR_COLORS = [
+  {bg:'#FFF0EB',text:'#B83208'},
+  {bg:'#E6F5F1',text:'#085041'},
+  {bg:'#EBF3FC',text:'#0C447C'},
+  {bg:'#FFF8EC',text:'#7A5800'},
+  {bg:'#FCE8EF',text:'#99223A'},
+  {bg:'#F5F0FC',text:'#3C3489'},
+];
+
+const waitlist = [
+  {name:'Priya Sharma',role:'JEE 2025 Aspirant',city:'Delhi',source:'College pitch',joined:'2 days ago',priority:'hot'},
+  {name:'Rohan Mehta',role:'NEET Dropper',city:'Mumbai',source:'Friend referral',joined:'3 days ago',priority:'hot'},
+  {name:'Ananya Reddy',role:'UPSC Prep',city:'Hyderabad',source:'Startup India demo',joined:'4 days ago',priority:'warm'},
+  {name:'Karan Tiwari',role:'Class 11, PCM',city:'Pune',source:'IIT Delhi pitch',joined:'5 days ago',priority:'hot'},
+  {name:'Sneha Gupta',role:'CA Foundation',city:'Chennai',source:'Instagram',joined:'6 days ago',priority:'warm'},
+  {name:'Arjun Nair',role:'Class 12, PCB',city:'Kochi',source:'College pitch',joined:'1 week ago',priority:'warm'},
+  {name:'Ritika Joshi',role:'MBA Entrance',city:'Bangalore',source:'LinkedIn post',joined:'1 week ago',priority:'warm'},
+  {name:'Dev Patel',role:'JEE Advanced',city:'Ahmedabad',source:'IIT Delhi pitch',joined:'1 week ago',priority:'cold'},
+  {name:'Meera Iyer',role:'CBSE Class 10',city:'Hyderabad',source:'WhatsApp group',joined:'9 days ago',priority:'cold'},
+  {name:'Sahil Khan',role:'NEET 2025',city:'Lucknow',source:'BITS Pilani pitch',joined:'10 days ago',priority:'warm'},
+  {name:'Ishaan Verma',role:'Class 11 Science',city:'Jaipur',source:'Twitter',joined:'11 days ago',priority:'cold'},
+  {name:'Divya Singh',role:'UPSC Mains',city:'Patna',source:'College pitch',joined:'12 days ago',priority:'warm'},
+  {name:'Aditya Kumar',role:'JEE Dropper',city:'Varanasi',source:'YouTube demo',joined:'2 weeks ago',priority:'hot'},
+  {name:'Tanvi Rao',role:'Class 12 PCB',city:'Mangalore',source:'Startup India demo',joined:'2 weeks ago',priority:'cold'},
+  {name:'Nikhil Bansal',role:'CA Final',city:'Delhi',source:'LinkedIn',joined:'2 weeks ago',priority:'warm'},
+];
+
+const feedback = [
+  {name:'Karan T.',role:'JEE 2025, Pune',rating:5,text:'I solved more problems in one battle session than in an entire week of solo studying. The competitive format actually makes me push harder.',tag:'Battle mode'},
+  {name:'Priya S.',role:'NEET Aspirant, Delhi',rating:5,text:'The AI tutor is genuinely scary good. It knew I was weak in organic chemistry before I even told it. The roadmap it built for me is better than what my coaching center gave.',tag:'AI tutor'},
+  {name:'Ananya R.',role:'UPSC Prep, Hyderabad',rating:5,text:'As someone preparing for UPSC, I never expected a free platform to take my exam seriously. LearnMate has more current affairs depth than paid apps I\'ve used.',tag:'Content quality'},
+  {name:'Rohan M.',role:'Class 12, Mumbai',rating:4,text:'The battle feature is addictive — in a good way. I spent 2 hours on the platform without even realising it. Just want more biology questions.',tag:'Engagement'},
+  {name:'Sneha G.',role:'CA Foundation, Chennai',rating:5,text:'Being able to fight a random person on cost accounting at 11pm is something I never knew I needed. My scores have genuinely improved.',tag:'Battle mode'},
+  {name:'Arjun N.',role:'JEE Advanced, Kochi',rating:4,text:'Clean UI, no distractions, and the roadmap feature is insane. Mapped my entire JEE prep in 3 minutes. Waiting for the mobile app.',tag:'Roadmap'},
+  {name:'Meera I.',role:'Class 10, Hyderabad',rating:5,text:'My daughter uses it every evening now. The battles keep her engaged when nothing else does. Results in her mocks have already improved.',tag:'Parent feedback'},
+];
+
+const pitches = [
+  {venue:'IIT Delhi — Entrepreneurship Cell',date:'Apr 2025',signups:38,reaction:'Standing ovation. 3 professors asked for beta access.',outcome:'success'},
+  {venue:'Startup India Bootcamp, Delhi',date:'Mar 2025',signups:12,reaction:'Judges called it "the Duolingo moment for Indian competitive exams."',outcome:'success'},
+  {venue:'BITS Pilani Oasis Fest',date:'Mar 2025',signups:22,reaction:'Long queue after demo. Students asked about launch date.',outcome:'success'},
+  {venue:'TiE Delhi Young Entrepreneurs',date:'Feb 2025',signups:8,reaction:'Angel investor requested a follow-up call.',outcome:'warm'},
+  {venue:'SRM University Tech Fest',date:'Feb 2025',signups:41,reaction:'Largest single-event signup. Students shared on Instagram stories.',outcome:'success'},
+  {venue:'NIT Warangal Technozion',date:'Jan 2025',signups:19,reaction:'Faculty advisor offered to pilot it in coaching sessions.',outcome:'success'},
+];
+
+function initials(name){ return name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
+function avColor(i){ return AVATAR_COLORS[i % AVATAR_COLORS.length]; }
+
+function priorityBadge(p){
+  const map={hot:{bg:'#FFF0EB',text:'#B83208',label:'Hot'},warm:{bg:'#FFF8EC',text:'#7A5800',label:'Warm'},cold:{bg:'var(--color-background-secondary)',text:'var(--color-text-tertiary)',label:'Cold'}};
+  const m=map[p]||map.cold;
+  return `<span class="badge" style="background:${m.bg};color:${m.text}">${m.label}</span>`;
+}
+
+let shown = 7;
+function renderWaitlist(count){
+  const el = document.getElementById('waitlist-list');
+  el.innerHTML = '';
+  waitlist.slice(0,count).forEach((p,i)=>{
+    const ac=avColor(i);
+    const div=document.createElement('div');
+    div.className='person-row';
+    div.style.animationDelay=(i*0.045)+'s';
+    div.innerHTML=`
+      <div class="avatar" style="background:${ac.bg};color:${ac.text}">${initials(p.name)}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:14px;font-weight:500;color:var(--color-text-primary)">${p.name}</div>
+        <div style="font-size:12px;color:var(--color-text-secondary)">${p.role} · ${p.city}</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        ${priorityBadge(p.priority)}
+        <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:3px">${p.joined}</div>
+      </div>
+    `;
+    el.appendChild(div);
+  });
+  document.getElementById('load-btn').style.display = count >= waitlist.length ? 'none' : 'block';
+}
+
+function loadMore(){ shown = Math.min(shown+5, waitlist.length); renderWaitlist(shown); }
+
+function renderFeedback(){
+  const el=document.getElementById('feedback-list');
+  feedback.forEach((f,i)=>{
+    const ac=avColor(i+2);
+    const stars='★'.repeat(f.rating)+'☆'.repeat(5-f.rating);
+    const div=document.createElement('div');
+    div.className='feedback-card';
+    div.style.animationDelay=(i*0.07)+'s';
+    div.innerHTML=`
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:9px">
+          <div class="avatar" style="background:${ac.bg};color:${ac.text};width:30px;height:30px;font-size:11px">${initials(f.name)}</div>
+          <div>
+            <div style="font-size:13px;font-weight:500;color:var(--color-text-primary)">${f.name}</div>
+            <div style="font-size:11px;color:var(--color-text-tertiary)">${f.role}</div>
+          </div>
+        </div>
+        <div>
+          <div class="stars">${stars}</div>
+          <div style="font-size:10px;color:var(--color-text-tertiary);text-align:right;margin-top:2px">${f.tag}</div>
+        </div>
+      </div>
+      <p style="font-size:14px;line-height:1.65;color:var(--color-text-secondary);font-style:italic">"${f.text}"</p>
+    `;
+    el.appendChild(div);
+  });
+}
+
+function renderPitches(){
+  const el=document.getElementById('pitches-list');
+  pitches.forEach((p,i)=>{
+    const outcomeMap={success:{bg:'#E6F5F1',text:'#085041',label:'Strong'},warm:{bg:'#FFF8EC',text:'#7A5800',label:'Follow-up'}};
+    const om=outcomeMap[p.outcome]||outcomeMap.warm;
+    const div=document.createElement('div');
+    div.className='feedback-card';
+    div.style.animationDelay=(i*0.06)+'s';
+    div.innerHTML=`
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px">
+        <div>
+          <div style="font-size:14px;font-weight:500;color:var(--color-text-primary)">${p.venue}</div>
+          <div style="font-size:12px;color:var(--color-text-tertiary);margin-top:2px">${p.date}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <span class="badge" style="background:${om.bg};color:${om.text}">${om.label}</span>
+          <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px"><strong style="font-weight:500">${p.signups}</strong> sign-ups</div>
+        </div>
+      </div>
+      <p style="font-size:13px;line-height:1.6;color:var(--color-text-secondary);font-style:italic">"${p.reaction}"</p>
+    `;
+    el.appendChild(div);
+  });
+}
+
+function showTab(name, btn){
+  ['waitlist','feedback','pitches'].forEach(t=>{
+    document.getElementById('tab-'+t).style.display = t===name?'block':'none';
+  });
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+renderWaitlist(shown);
+renderFeedback();
+renderPitches();
+
+let wlNum = 247;
+setInterval(()=>{
+  if(Math.random()>0.6){
+    wlNum++;
+    const el=document.getElementById('wl-count');
+    if(el){ el.textContent=wlNum; el.style.animation='none'; void el.offsetWidth; el.style.animation='number-pop 0.4s cubic-bezier(0.34,1.56,0.64,1) both'; }
+  }
+},7000);
+</script>
